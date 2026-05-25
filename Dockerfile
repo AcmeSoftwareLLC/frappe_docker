@@ -82,7 +82,7 @@ RUN bench init \
     /home/frappe/frappe-bench && \
     cd /home/frappe/frappe-bench && \
     bench get-app --branch=${ERPNEXT_BRANCH} --resolve-deps erpnext ${ERPNEXT_REPO} && \
-    bench get-app --branch=${HRMS_BRANCH} --resolve-deps hrms ${HRMS_REPO} && \
+    bench get-app --branch=${HRMS_BRANCH} hrms ${HRMS_REPO} && \
     echo "{}" > sites/common_site_config.json && \
     find apps -mindepth 1 -path "*/.git" | xargs rm -fr
 
