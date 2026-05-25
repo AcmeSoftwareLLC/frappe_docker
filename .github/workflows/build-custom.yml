@@ -27,12 +27,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Prepare apps.json secret
-        run: |
-          echo 'APPS_JSON<<EOF' >> $GITHUB_ENV
-          cat apps.json >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -40,8 +34,9 @@ jobs:
           file: images/layered/Containerfile
           push: true
           tags: ghcr.io/acmesoftwarellc/frappe-hrms:version-15
-          secrets: |
-            apps_json=${{ env.APPS_JSON }}
+          secret-files: |
+            apps_json=./apps.json
           build-args: |
             FRAPPE_PATH=https://github.com/frappe/frappe
             FRAPPE_BRANCH=version-15
+            FRAPPE_IMAGE_PREFIX=ghcr.io/frappe
