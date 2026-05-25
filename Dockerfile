@@ -1,36 +1,13 @@
-name: Build and Publish Custom Image
+FROM ghcr.io/frappe/frappe:version-15
 
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
+USER frappe
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+# Get apps
+RUN bench get-app --branch version-15 https://github.com/frappe/erpnext && \
+    bench get-app --branch version-15 https://github.com/frappe/hrms
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: Dockerfile
-          push: true
-          tags: ghcr.io/acmesoftwarellc/frappe-hrms:version-15a
+# Build assets
+RUN cd /home/frappe/frappe-bench && \
+    bench build --app frappe && \
+    bench build --app erpnext && \
+    bench build --app hrms
