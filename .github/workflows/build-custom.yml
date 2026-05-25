@@ -31,7 +31,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: images/layered/Containerfile
+          file: Dockerfile
           push: true
           tags: ghcr.io/acmesoftwarellc/frappe-hrms:version-15
           secret-files: |
