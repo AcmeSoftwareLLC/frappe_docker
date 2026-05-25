@@ -33,10 +33,4 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: ghcr.io/acmesoftwarellc/frappe-hrms:version-15
-          secret-files: |
-            apps_json=./apps.json
-          build-args: |
-            FRAPPE_PATH=https://github.com/frappe/frappe
-            FRAPPE_BRANCH=version-15
-            FRAPPE_IMAGE_PREFIX=ghcr.io/frappe
+          tags: ghcr.io/acmesoftwarellc/frappe-hrms:version-15a
