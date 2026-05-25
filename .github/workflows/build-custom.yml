@@ -1,7 +1,7 @@
 name: Build and Publish Custom Image
 
 on:
-  workflow_dispatch:  # manual trigger
+  workflow_dispatch: # manual trigger
   push:
     branches:
       - main
